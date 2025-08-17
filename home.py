@@ -79,7 +79,7 @@ def main():
             
             with col2:
                 if st.button("❓ Q&A Chat"):
-                    st.info("Q&A Chat interface will be here...")
+                    st.switch_page("pages/chatbot.py")
             
             with col3:
                 if st.button("🧠 Quiz"):
