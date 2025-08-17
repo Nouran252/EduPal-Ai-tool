@@ -80,27 +80,32 @@ def create_pdf_file(summary_text):
             else:
                 pdf.ln(5)  # Add space for empty lines
         
-        return pdf.output(dest='S').encode('latin-1')
+        return bytes(pdf.output(dest="S"))
     except Exception as e:
         raise Exception(f"Error creating PDF: {str(e)}")
 
-def text_to_speech(text):
+def text_to_speech(text, filename="speech_output.wav"):
     """Convert text to speech using pyttsx3"""
     try:
         # Initialize the TTS engine
         engine = pyttsx3.init()
         
+        voices=engine.getProperty('voices')
+
         # Set properties
+        engine.setProperty('voice',voices[0].id)
         engine.setProperty('rate', 150)    # Speed of speech
         engine.setProperty('volume', 0.9)  # Volume level (0.0 to 1.0)
         
         # Clean text for speech (remove markdown)
         clean_text = re.sub(r"[^a-zA-Z0-9\s.,!?]", "", text)
+        
         # Speak the text
         engine.say(clean_text)
+        engine.save_to_file(clean_text, filename)
         engine.runAndWait()
-        
-        return True
+        print(f"Audio saved as '{filename}'")
+        return filename
     except Exception as e:
         raise Exception(f"Error with text-to-speech: {str(e)}")
 

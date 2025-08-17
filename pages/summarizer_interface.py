@@ -1,6 +1,7 @@
 import streamlit as st
 import threading
 from summary import summarize_text, create_txt_file, create_pdf_file, text_to_speech, get_summary_stats
+import os
 
 # Configure the page
 st.set_page_config(page_title="Summary - EduPal", page_icon="📄", layout="wide")
@@ -120,22 +121,24 @@ def main():
             st.error(f"❌ Error creating PDF: {str(e)}")
     
     with col3:
+
         # Listen to Summary
         if st.button("🔊 Listen to Summary"):
             with st.spinner("🎧 Converting to speech..."):
-                def speak_summary():
-                    try:
-                        text_to_speech(summary_text)
+                try:
+                    filename = "speech_output.wav"
+                    text_to_speech(summary_text, filename)
+
+            # Show audio player
+                    if os.path.exists(filename):
                         st.success("✅ Finished reading summary!")
-                    except Exception as e:
-                        st.error(f"❌ Could not convert to speech: {str(e)}")
-                
-                # Start speaking in a separate thread
-                speech_thread = threading.Thread(target=speak_summary)
-                speech_thread.daemon = True
-                speech_thread.start()
-                st.info("🎙️ Starting to read summary... (This may take a moment to start)")
-    
+                        st.audio(filename, format="audio/wav")
+                    else:
+                        st.error("❌ Could not generate audio file.")
+                except Exception as e:
+
+                    st.error(f"❌ Could not convert to speech: {str(e)}")
+
     with col4:
         # Go to Home
         if st.button("🏠 Go to Home"):
