@@ -30,6 +30,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+
+
 def extract_pdf_text(uploaded_file):
     """Extract text from uploaded PDF file"""
     try:
@@ -73,11 +75,11 @@ def main():
             
             with col1:
                 if st.button("📝 Summarize"):
-                    st.info("Summarization will be here...")
+                   st.switch_page("pages/summarizer_interface.py")
             
             with col2:
                 if st.button("❓ Q&A Chat"):
-                    st.switch_page("pages/chatbot.py")
+                    st.info("Q&A Chat interface will be here...")
             
             with col3:
                 if st.button("🧠 Quiz"):
