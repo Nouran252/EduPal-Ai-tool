@@ -7,3 +7,8 @@ langchain-google-genai
 langchain-community
 crewai
 crewai-tools
+google-generativeai
+PyPDF2
+fpdf2
+pyttsx3
+pdfplumber
