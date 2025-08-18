@@ -101,7 +101,7 @@ def text_to_speech(text, filename="speech_output.wav"):
         clean_text = re.sub(r"[^a-zA-Z0-9\s.,!?]", "", text)
         
         # Speak the text
-        engine.say(clean_text)
+        #engine.say(clean_text)
         engine.save_to_file(clean_text, filename)
         engine.runAndWait()
         print(f"Audio saved as '{filename}'")
